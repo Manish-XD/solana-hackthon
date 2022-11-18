@@ -6,7 +6,7 @@ const style = {
   wrapper: `flex-1 h-full w-full`,
 }
 
-mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
+mapboxgl.accessToken = 'pk.eyJ1Ijoiamlnb2xvIiwiYSI6ImNsYWtoeDdiZTAwaWszb245ZTlieWNiMmsifQ.GMIefrqywj19pkbxdcSjqw';
 
 const Map = () => {
   const { pickupCoordinates, dropoffCoordinates } = useContext(UberContext)
@@ -14,9 +14,9 @@ const Map = () => {
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://styles/drakosi/ckvcwq3rwdw4314o3i2ho8tph',
-      center: [-99.29011, 39.39172],
-      zoom: 3,
+      style: 'mapbox://styles/mapbox/dark-v10',
+      center: [77.21956281401839,28.632914608997154],
+      zoom: 10,
     })
 
     if (pickupCoordinates) {

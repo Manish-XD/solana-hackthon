@@ -5,7 +5,8 @@ const query = `
   "service": title,
   "iconUrl": icon.asset->url,
   priceMultiplier,
-  orderById
+  orderById,
+  seats
 }|order(orderById asc)
 `
 

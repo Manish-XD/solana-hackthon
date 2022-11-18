@@ -2,6 +2,7 @@ import Image from 'next/image'
 import ethLogo from '../assets/eth-logo.png'
 import { useEffect, useContext, useState } from 'react'
 import { UberContext } from '../context/uberContext'
+import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 
 const style = {
   wrapper: `h-full flex flex-col`,
@@ -12,17 +13,17 @@ const style = {
   carImage: `h-14`,
   carDetails: `ml-2 flex-1`,
   service: `font-medium`,
-  time: `text-xs text-blue-500`,
+  time: `text-xs text-[#00FF9D]`,
+  seat: `text-lg flex align-center`,
   priceContainer: `flex items-center`,
   price: `mr-[-0.8rem]`,
 }
 
 const RideSelector = () => {
   const [carList, setCarList] = useState([])
-  const { selectedRide, setSelectedRide, setPrice, basePrice } =
-    useContext(UberContext)
+  const { selectedRide, setSelectedRide, setPrice, basePrice } = useContext(UberContext);
 
-  console.log(basePrice)
+  console.log("basePrice", basePrice);
 
   useEffect(() => {
     ;(async () => {
@@ -52,7 +53,7 @@ const RideSelector = () => {
             }`}
             onClick={() => {
               setSelectedRide(car)
-              setPrice(((basePrice / 10 ** 5) * car.priceMultiplier).toFixed(5))
+              setPrice(((1201 / 10 ** 5) * car.priceMultiplier).toFixed(5))
             }}
           >
             <Image
@@ -64,10 +65,11 @@ const RideSelector = () => {
             <div className={style.carDetails}>
               <div className={style.service}>{car.service}</div>
               <div className={style.time}>5 min away</div>
+              <div className={style.seat}><Person2OutlinedIcon className={style.seatIcon}/>{car.seats}</div>
             </div>
             <div className={style.priceContainer}>
               <div className={style.price}>
-                {((basePrice / 10 ** 5) * car.priceMultiplier).toFixed(5)}
+                {((1201 / 10 ** 5) * car.priceMultiplier).toFixed(5)}
               </div>
               <Image src={ethLogo} height={25} width={40} />
             </div>
