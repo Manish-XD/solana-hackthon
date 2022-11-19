@@ -13,7 +13,7 @@ const style = {
 }
 
 const Login = () => {
-    const { connectWallet } = useContext(UberContext);
+    const { connectWallet, setCurrentAccount } = useContext(UberContext);
     // const [walletAddress, setWalletAddress] = useState(null);
     // const checkIfWalletIsConnected = async () => {
     //     try {
@@ -49,12 +49,23 @@ const Login = () => {
     //     }
     //   };
 
+    const disconnectWallet = async () => {
+        const { solana } = window;
+        if (solana) {
+          await solana.disconnect();
+          setCurrentAccount(null);
+            console.log("disconnect")
+            // disconnectWallet()
+        }
+      };
+
     return (
         <div className={style.wrapper}>
             <div className={style.container}>
                 <Image src={PhantomLogo} height={50} width={50}/>
                 <h1 className={style.heading}>Sol-Wag</h1>
             <button onClick={connectWallet} className={style.connectButton}>Connect to wallet</button>
+            <button onClick={disconnectWallet}>Disconnect</button>
             </div>
             {/* Login
             <h1> Wallet Address: {walletAddress} </h1> */}

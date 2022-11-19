@@ -200,6 +200,7 @@ export const UberProvider = ({ children }) => {
         setDropoffCoordinates,
         connectWallet,
         currentAccount,
+        setCurrentAccount,
         currentUser,
         selectedRide,
         setSelectedRide,

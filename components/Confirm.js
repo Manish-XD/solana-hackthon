@@ -2,6 +2,9 @@ import RideSelector from './RideSelector'
 import { useContext, useState } from 'react'
 import { UberContext } from '../context/uberContext'
 import { ethers } from 'ethers'
+import { PublicKey } from '@solana/web3.js';
+import { Keypair } from '@solana/web3.js';
+import BigNumber from 'bignumber.js';
 
 const style = {
   wrapper: `flex-1 h-full flex flex-col justify-between bg-primary`,
@@ -11,7 +14,7 @@ const style = {
   timeInput: `text-black outline-0 py-2 px-4`
 }
 
-const Confirm = () => {
+const Confirm = ({offer}) => {
   const {
     currentAccount,
     pickup,
@@ -20,12 +23,12 @@ const Confirm = () => {
     selectedRide,
     pickupCoordinates,
     dropoffCoordinates,
-    metamask
+    metamask,
+    time
   } = useContext(UberContext)
 
 
   const storeTripDetails = async (pickup, dropoff) => {
-    console.log("time",time);
     try {
       await fetch('/api/db/saveTrips', {
         method: 'POST',
@@ -53,15 +56,20 @@ const Confirm = () => {
           },
         ],
       })
+
+
+
     } catch (error) {
       console.error(error)
     }
   }
 
+  
+
   return (
     <div className={style.wrapper}>
       <div className={style.rideSelectorContainer}>
-        {pickupCoordinates && dropoffCoordinates && <RideSelector />}
+        {pickupCoordinates && dropoffCoordinates && <RideSelector offer={offer} key={offer}/>}
       </div>
       <div className={style.confirmButtonContainer}>
         <div className={style.confirmButtonContainer}>

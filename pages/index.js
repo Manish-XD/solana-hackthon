@@ -10,7 +10,7 @@ const style = {
   wrapper: `h-screen w-screen flex flex-col`,
   main: `h-full w-screen flex-1 z-10`,
   mapContainer: `flex-1 w-full h-full`,
-  rideRequestContainer: `h-screen w-[400px] py-[3rem] fixed top-0 right-[4rem] flex flex-col justify-end z-20`,
+  rideRequestContainer: `h-screen md:w-[400px] w-full py-[3rem] fixed md:top-0 top-[15rem] md:right-[2rem] flex flex-col justify-end z-20`,
   rideRequest: `h-screen bg-white rounded-lg flex flex-col overflow-scroll text-white bg-primary`,
 }
 
@@ -26,7 +26,7 @@ export default function Home() {
         <div className={style.rideRequest}>
           <PoolList ride={ride}/>
           <LocationSelector offer={offer}/>
-          <Confirm />
+          <Confirm offer={offer}/>
         </div>
       </div>
     </div>

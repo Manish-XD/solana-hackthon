@@ -15,14 +15,15 @@ const style = {
   service: `font-medium`,
   time: `text-xs text-[#00FF9D]`,
   seat: `text-lg flex align-center`,
-  priceContainer: `flex items-center`,
+  priceContainer: `flex items-center mr-4`,
   price: `mr-[-0.8rem]`,
-  timeInput: `mx-4 p-2 text-black outline-none`
+  timeInput: `mx-4 p-2 text-black outline-none mb-2`,
+  timeInputLabel: `px-4 text-lg mb-2`
 }
 
-const RideSelector = () => {
+const RideSelector = ({offer}) => {
   const [carList, setCarList] = useState([])
-  const { selectedRide, setSelectedRide, setPrice, basePrice } = useContext(UberContext);
+  const { selectedRide, setSelectedRide, setPrice, basePrice, time, setTime } = useContext(UberContext);
 
   console.log("basePrice", basePrice);
 
@@ -41,8 +42,8 @@ const RideSelector = () => {
   }, [])
 
   return (
-    <div className={style.wrapper}>
-      <label htmlFor='appt'>Schedule your Ride for: </label>
+    <div className={`${style.wrapper} ${offer}`}>
+      <label htmlFor='appt' className={style.timeInputLabel}>Schedule your Ride for: </label>
           <input type="datetime-local" id="appt" name="appt"
            min="09:00" max="18:00" className={style.timeInput} onChange={e=>{setTime(e.target.value)}} required/>
       <div className={style.title}>Choose a ride, or swipe up for more</div>
@@ -68,14 +69,14 @@ const RideSelector = () => {
             />
             <div className={style.carDetails}>
               <div className={style.service}>{car.service}</div>
-              <div className={style.time}>5 min away</div>
+              <div className={style.time}>{car.driver}</div>
               <div className={style.seat}><Person2OutlinedIcon className={style.seatIcon}/>{car.seats}</div>
             </div>
             <div className={style.priceContainer}>
               <div className={style.price}>
-                {((1201 / 10 ** 5) * car.priceMultiplier).toFixed(5)}
+                {((1201 / 10 ** 5) * car.priceMultiplier).toFixed(5)} SOL
               </div>
-              <Image src={ethLogo} height={25} width={40} />
+              {/* <Image src={ethLogo} height={25} width={40} /> */}
             </div>
           </div>
         ))}

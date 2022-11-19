@@ -6,7 +6,8 @@ const query = `
   "iconUrl": icon.asset->url,
   priceMultiplier,
   orderById,
-  seats
+  seats,
+  driver
 }|order(orderById asc)
 `
 

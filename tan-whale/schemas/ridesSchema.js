@@ -27,6 +27,11 @@ export const ridesSchema = {
         title: 'seats',
         name: 'seats',
         type: 'number'
+      },
+      {
+        title: 'driver',
+        name: 'driver',
+        type: 'string'
       }
     ],
   }
