@@ -6,14 +6,14 @@ import Image from 'next/image'
 import ethLogo from '../assets/eth-logo.png'
 
 const style = {
-    wrapper: `flex flex-col items-center`,
+    wrapper: `flex flex-col items-center bg-primary`,
     heading: `bg-gradient-to-r from-[#D900FA] via-[#00DBFD] to-[#00FF9D] text-transparent bg-clip-text w-full font-bold text-left flex items-center text-3xl p-4 overflow-hidden`,
     tripItem: `flex flex-col p-4 border-b-2 border-slate-300 w-11/12 cursor-pointer hover:bg-slate-100/5 rounded-t-2xl my-3`,
     dropOff: `flex justify-between text-xl pb-2 px-px`,
     price: `flex items-center`
 }
 
-const PoolList = () => {
+const PoolList = ({ride}) => {
     const [tripList, setTripList] = useState([]);
     useEffect(() => {
         ; (async () => {
@@ -29,7 +29,7 @@ const PoolList = () => {
         })()
     }, [])
     return (
-        <div className={style.wrapper}>
+        <div className={`${style.wrapper} ${ride}`}>
             <h1 className={style.heading}>Available Rides:</h1>
             {tripList.map((trip, index) => {
                 return (

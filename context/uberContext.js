@@ -1,9 +1,12 @@
 import { createContext, useState, useEffect } from 'react'
 import { faker } from '@faker-js/faker'
+import Link from 'next/link'
+import { useRouter } from 'next/router';
 
 export const UberContext = createContext()
 
 export const UberProvider = ({ children }) => {
+  const router = useRouter();
   const [pickup, setPickup] = useState('')
   const [dropoff, setDropoff] = useState('')
   const [pickupCoordinates, setPickupCoordinates] = useState()
@@ -13,7 +16,9 @@ export const UberProvider = ({ children }) => {
   const [selectedRide, setSelectedRide] = useState([])
   const [price, setPrice] = useState()
   const [basePrice, setBasePrice] = useState()
-
+  const [ride, setRide] = useState('block');
+  const [offer, setOffer] = useState('hidden');
+  const [time, setTime] = useState('');
   let metamask
 
   if (typeof window !== 'undefined') {
@@ -53,36 +58,57 @@ export const UberProvider = ({ children }) => {
   }, [pickupCoordinates, dropoffCoordinates])
 
   const checkIfWalletIsConnected = async () => {
-    if (!window.ethereum) return
     try {
-      const addressArray = await window.ethereum.request({
-        method: 'eth_accounts',
-      })
+        const { solana } = window;
 
-      if (addressArray.length > 0) {
-        setCurrentAccount(addressArray[0])
-        requestToCreateUserOnSanity(addressArray[0])
-      }
+        if (solana) {
+            if (solana.isPhantom) {
+                // console.log("Wallet Found");
+                const response = await solana.connect({ onlyIfTrusted: true });
+                // console.log(
+                //   "connected with publickey:",
+                //   response.publicKey.toString()
+                // );
+                setCurrentAccount(response.publicKey.toString());
+            }
+        } else {
+            alert("Get a phantom wallet")
+            console.log("Get a phantom wallet");
+        }
     } catch (error) {
-      console.error(error)
+        alert(error);
     }
-  }
+};
+
+  
 
   const connectWallet = async () => {
-    if (!window.ethereum) return
-    try {
-      const addressArray = await window.ethereum.request({
-        method: 'eth_requestAccounts',
-      })
-
-      if (addressArray.length > 0) {
-        setCurrentAccount(addressArray[0])
-        requestToCreateUserOnSanity(addressArray[0])
-      }
-    } catch (error) {
-      console.error(error)
+    checkIfWalletIsConnected();
+    const { solana } = window;
+    if (solana) {
+      const response = await solana.connect();
+      // console.log("connected with public key", response.publicKey);
+      setCurrentAccount(response.publicKey.toString());
+      console.log(currentAccount);
+      router.push('/');
     }
-  }
+  };
+
+  // const connectWallet = async () => {
+  //   if (!window.ethereum) return
+  //   try {
+  //     const addressArray = await window.ethereum.request({
+  //       method: 'eth_requestAccounts',
+  //     })
+
+  //     if (addressArray.length > 0) {
+  //       setCurrentAccount(addressArray[0])
+  //       requestToCreateUserOnSanity(addressArray[0])
+  //     }
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
 
   const createLocationCoordinatePromise = (locationName, locationType) => {
     return new Promise(async (resolve, reject) => {
@@ -181,6 +207,12 @@ export const UberProvider = ({ children }) => {
         setPrice,
         basePrice,
         metamask,
+        ride,
+        setRide,
+        offer,
+        setOffer,
+        time,
+        setTime
       }}
     >
       {children}

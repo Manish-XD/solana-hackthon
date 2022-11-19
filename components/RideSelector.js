@@ -7,9 +7,9 @@ import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 const style = {
   wrapper: `h-full flex flex-col`,
   title: `text-gray-500 text-center text-xs py-2 border-b`,
-  carList: `flex flex-col flex-1 overflow-scroll`,
-  car: `flex p-3 m-2 items-center border-2 border-white`,
-  selectedCar: `border-2 border-black flex p-3 m-2 items-center`,
+  carList: `flex flex-col flex-1`,
+  car: `flex p-3 m-2 items-center border-2 border-black`,
+  selectedCar: `border-2 border-white flex p-3 m-2 items-center`,
   carImage: `h-14`,
   carDetails: `ml-2 flex-1`,
   service: `font-medium`,
@@ -17,6 +17,7 @@ const style = {
   seat: `text-lg flex align-center`,
   priceContainer: `flex items-center`,
   price: `mr-[-0.8rem]`,
+  timeInput: `mx-4 p-2 text-black outline-none`
 }
 
 const RideSelector = () => {
@@ -41,6 +42,9 @@ const RideSelector = () => {
 
   return (
     <div className={style.wrapper}>
+      <label htmlFor='appt'>Schedule your Ride for: </label>
+          <input type="datetime-local" id="appt" name="appt"
+           min="09:00" max="18:00" className={style.timeInput} onChange={e=>{setTime(e.target.value)}} required/>
       <div className={style.title}>Choose a ride, or swipe up for more</div>
       <div className={style.carList}>
         {carList.map((car, index) => (

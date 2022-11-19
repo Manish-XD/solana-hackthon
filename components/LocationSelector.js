@@ -17,7 +17,7 @@ const style = {
   wrapperFindRide: `bg-primary`
 }
 
-const LocationSelector = () => {
+const LocationSelector = ({offer}) => {
   const [inFocus, setInFocus] = useState('from');
   const { pickup, setPickup, dropoff, setDropoff } = useContext(UberContext);
   // const [offerDisplay, setOfferDisplay] = useState('block');
@@ -48,7 +48,7 @@ const LocationSelector = () => {
           setRideDisplay('hidden');
         }}>Offer Pool</div>
       </div> */}
-      <div className={`${style.wrapper}`}>
+      <div className={`${style.wrapper} ${offer}`}>
         <div className={style.searchHeader}>
           <span className={style.searchHeaderSpan}>{inFocus === 'from' ? 'Where can we pick you up?' : 'Where to?'}</span>
         </div>
@@ -96,6 +96,7 @@ const LocationSelector = () => {
               onFocus={() => setInFocus('to')}
             />
           </div>
+          
         </div>
       </div>
       {/* <div className={`${style.wrapperFindRide} ${rideDisplay}`}>
